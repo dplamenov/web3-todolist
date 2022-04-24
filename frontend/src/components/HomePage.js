@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
 import { ethers } from "ethers"
 import useContract from '../hooks/useContract'
+import useProvider from '../hooks/useProvider'
 
 function HomePage() {
   const [currentAccount, setCurrentAccount] = useState()
-  const [provider, setProvider] = useState()
-  const [signer, setSigner] = useState()
-  const [todos, setTodos] = useState([]);
+  const provider = useProvider()
   const contract = useContract('TodoList');
+  const [todos, setTodos] = useState([]);
+  const [balance, setBalance] = useState();
+
 
   useEffect(() => {
     if (!window.ethereum) {
@@ -18,13 +20,8 @@ function HomePage() {
     window.ethereum.request({ method: 'eth_requestAccounts' })
       .then(result => {
         setCurrentAccount(result[0]);
-        const tempProvider = new ethers.providers.Web3Provider(window.ethereum);
-        setProvider(tempProvider);
-
-        const tempSigner = tempProvider.getSigner();
-        setSigner(tempSigner);
-        
         contract.getTodos().then(setTodos);
+        provider.getBalance(result[0]).then(ethers.utils.formatEther).then(setBalance);
       });  
   }, [])
 
@@ -41,7 +38,8 @@ function HomePage() {
   return (
     <div style={{width: "70%", margin: "0 auto"}}>
       <h1>Todo List application</h1>
-      <p>Account:{currentAccount} </p>
+      <p>Account: {currentAccount}</p>
+      <p>Balance: {balance} ETH</p>
       <hr />
       <h2>Todos</h2>
       {todos.map((todo, key) => {
