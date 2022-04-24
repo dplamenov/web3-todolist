@@ -1,0 +1,28 @@
+ [{
+         "inputs": [{
+             "internalType": "string",
+             "name": "_todo",
+             "type": "string"
+         }],
+         "name": "addTodo",
+         "outputs": [],
+         "stateMutability": "nonpayable",
+         "type": "function"
+     },
+     {
+         "inputs": [],
+         "name": "getTodos",
+         "outputs": [{
+             "components": [{
+                 "internalType": "string",
+                 "name": "todo",
+                 "type": "string"
+             }],
+             "internalType": "struct TodoList.Todo[]",
+             "name": "",
+             "type": "tuple[]"
+         }],
+         "stateMutability": "view",
+         "type": "function"
+     }
+ ]
