@@ -1,19 +1,33 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("Greeter", function () {
-  it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
+describe("TodoList", function () {
+  it("should be empty", async function () {
+    const TodoList = await ethers.getContractFactory("TodoList");
+    const todoList = await TodoList.deploy();
+    await todoList.deployed();
 
-    expect(await greeter.greet()).to.equal("Hello, world!");
+    expect(await todoList.getTodos()).to.deep.equal([]);
+  });
 
-    const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
+  it("should add todo in list", async function () {
+    const TodoList = await ethers.getContractFactory("TodoList");
+    const todoList = await TodoList.deploy();
+    await todoList.deployed();
 
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
+    await todoList.addTodo("simple todo");
 
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
+    expect(await todoList.getTodos()).to.deep.equal([["simple todo"]]);
+  });
+
+  it("should add todos in list", async function () {
+    const TodoList = await ethers.getContractFactory("TodoList");
+    const todoList = await TodoList.deploy();
+    await todoList.deployed();
+
+    await todoList.addTodo("simple todo");
+    await todoList.addTodo("my new todo");
+
+    expect(await todoList.getTodos()).to.deep.equal([["simple todo"], ["my new todo"]]);
   });
 });
