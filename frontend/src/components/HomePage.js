@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { ethers } from "ethers"
-import TodoListABI from '../abi/TodoList.json'
+import useContract from '../hooks/useContract'
 
 function HomePage() {
   const [currentAccount, setCurrentAccount] = useState()
   const [provider, setProvider] = useState()
   const [signer, setSigner] = useState()
   const [todos, setTodos] = useState([]);
+  const contract = useContract('TodoList');
 
   useEffect(() => {
     if (!window.ethereum) {
@@ -23,15 +24,19 @@ function HomePage() {
         const tempSigner = tempProvider.getSigner();
         setSigner(tempSigner);
         
-        const contract = new ethers.Contract('0x5FbDB2315678afecb367f032d93F642f64180aa3', TodoListABI, tempSigner);
-        // contract.addTodo("1").then(todo => {
-        //   console.log(todo);
-        // });
-
         contract.getTodos().then(setTodos);
       });  
   }, [])
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const value = e.target.todo.value;
+
+    contract.addTodo(value).then(_ => {
+      e.target.todo.value = '';
+      setTodos(todos => [...todos, {todo: value}]);
+    });
+  };
 
   return (
     <div style={{width: "70%", margin: "0 auto"}}>
@@ -42,6 +47,10 @@ function HomePage() {
       {todos.map((todo, key) => {
         return <p key={key}>{todo.todo}</p>
       })}
+      <form onSubmit={handleSubmit}>
+        <input placeholder='Todo' name='todo' />
+        <button>Create</button>
+      </form>
     </div>
   )
 }
