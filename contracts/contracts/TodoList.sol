@@ -11,4 +11,8 @@ contract TodoList {
     function addTodo(string memory _todo) public {
         return todos[msg.sender].push(Todo(_todo));
     }
+
+    function getTodos() public view returns (Todo[] memory) {
+        return todos[msg.sender];
+    }
 }
