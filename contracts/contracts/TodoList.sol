@@ -3,16 +3,28 @@ pragma solidity ^0.8.0;
 
 contract TodoList {
     struct Todo {
+        uint256 _id;
         string todo;
+        string description;
     }
 
     mapping(address => Todo[]) todos;
 
-    function addTodo(string memory _todo) public {
-        return todos[msg.sender].push(Todo(_todo));
+    function addTodo(string memory _todo, string memory _description)
+        public
+        returns (Todo memory)
+    {
+        Todo memory todo = Todo(todos[msg.sender].length, _todo, _description);
+        todos[msg.sender].push(todo);
+        return todo;
     }
 
     function getTodos() public view returns (Todo[] memory) {
+        return todos[msg.sender];
+    }
+
+    function removeTodo(uint256 _id) public returns (Todo[] memory) {
+        delete todos[msg.sender][_id];
         return todos[msg.sender];
     }
 }
