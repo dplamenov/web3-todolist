@@ -24,7 +24,10 @@ contract TodoList {
     }
 
     function removeTodo(uint256 _id) public returns (Todo[] memory) {
-        delete todos[msg.sender][_id];
+        todos[msg.sender][_id] = todos[msg.sender][
+            todos[msg.sender].length - 1
+        ];
+        todos[msg.sender].pop();
         return todos[msg.sender];
     }
 }
