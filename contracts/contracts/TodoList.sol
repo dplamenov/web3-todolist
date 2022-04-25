@@ -3,7 +3,6 @@ pragma solidity ^0.8.0;
 
 contract TodoList {
     struct Todo {
-        uint256 _id;
         string todo;
         string description;
     }
@@ -14,7 +13,7 @@ contract TodoList {
         public
         returns (Todo memory)
     {
-        Todo memory todo = Todo(todos[msg.sender].length, _todo, _description);
+        Todo memory todo = Todo(_todo, _description);
         todos[msg.sender].push(todo);
         return todo;
     }
