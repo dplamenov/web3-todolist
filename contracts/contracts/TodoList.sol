@@ -29,4 +29,13 @@ contract TodoList {
         todos[msg.sender].pop();
         return todos[msg.sender];
     }
+
+    function editTodo(
+        uint256 _id,
+        string memory _todo,
+        string memory _description
+    ) public returns (Todo memory) {
+        todos[msg.sender][_id] = Todo(_todo, _description);
+        return todos[msg.sender][_id];
+    }
 }
