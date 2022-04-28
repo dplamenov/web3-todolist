@@ -46,4 +46,20 @@ describe("TodoList", function () {
     await todoList.removeTodo(0);
     expect(await todoList.getTodos()).to.deep.equal([]);
   });
+
+  it("should edit todo", async function () {
+    const TodoList = await ethers.getContractFactory("TodoList");
+    const todoList = await TodoList.deploy();
+    await todoList.deployed();
+
+    await todoList.addTodo("simple todo", "1");
+    await todoList.addTodo("tickets", "to buy");
+
+    expect(await todoList.getTodos()).to.deep.equal([["simple todo", "1"], ["tickets", "to buy"]]);
+
+    await todoList.editTodo(0, "1", "2");
+    await todoList.editTodo(1, "ticket", "to buy");
+
+    expect(await todoList.getTodos()).to.deep.equal([["1", "2"], ["ticket", "to buy"]]);
+  });
 });
