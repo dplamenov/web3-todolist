@@ -13,11 +13,6 @@
         "name": "addTodo",
         "outputs": [{
             "components": [{
-                    "internalType": "uint256",
-                    "name": "_id",
-                    "type": "uint256"
-                },
-                {
                     "internalType": "string",
                     "name": "todo",
                     "type": "string"
@@ -26,6 +21,58 @@
                     "internalType": "string",
                     "name": "description",
                     "type": "string"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "isReady",
+                    "type": "bool"
+                }
+            ],
+            "internalType": "struct TodoList.Todo",
+            "name": "",
+            "type": "tuple"
+        }],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "_id",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "_todo",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_description",
+                "type": "string"
+            },
+            {
+                "internalType": "bool",
+                "name": "isReady",
+                "type": "bool"
+            }
+        ],
+        "name": "editTodo",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "todo",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "isReady",
+                    "type": "bool"
                 }
             ],
             "internalType": "struct TodoList.Todo",
@@ -40,11 +87,6 @@
         "name": "getTodos",
         "outputs": [{
             "components": [{
-                    "internalType": "uint256",
-                    "name": "_id",
-                    "type": "uint256"
-                },
-                {
                     "internalType": "string",
                     "name": "todo",
                     "type": "string"
@@ -53,6 +95,11 @@
                     "internalType": "string",
                     "name": "description",
                     "type": "string"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "isReady",
+                    "type": "bool"
                 }
             ],
             "internalType": "struct TodoList.Todo[]",
@@ -68,14 +115,9 @@
             "name": "_id",
             "type": "uint256"
         }],
-        "name": "removeTodo",
+        "name": "markAsReady",
         "outputs": [{
             "components": [{
-                    "internalType": "uint256",
-                    "name": "_id",
-                    "type": "uint256"
-                },
-                {
                     "internalType": "string",
                     "name": "todo",
                     "type": "string"
@@ -84,6 +126,42 @@
                     "internalType": "string",
                     "name": "description",
                     "type": "string"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "isReady",
+                    "type": "bool"
+                }
+            ],
+            "internalType": "struct TodoList.Todo",
+            "name": "",
+            "type": "tuple"
+        }],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "_id",
+            "type": "uint256"
+        }],
+        "name": "removeTodo",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "todo",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "internalType": "bool",
+                    "name": "isReady",
+                    "type": "bool"
                 }
             ],
             "internalType": "struct TodoList.Todo[]",
