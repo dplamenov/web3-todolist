@@ -20,7 +20,6 @@ function HomePage() {
           .then(setBalance);
         
         contract.getTodos().then(setTodos);
-        contract.getTodos().then(console.log);
       });  
   }, [])
 
