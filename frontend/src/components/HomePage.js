@@ -10,7 +10,6 @@ function HomePage() {
   const [todos, setTodos] = useState([]);
   const [balance, setBalance] = useState();
 
-
   useEffect(() => {
    window.ethereum.request({ method: 'eth_requestAccounts' })
       .then(result => {
@@ -33,16 +32,28 @@ function HomePage() {
     contract.addTodo(todo, description).then(() => {
       e.target.todo.value = '';
       e.target.description.value = '';
-      setTodos(todos => [...todos, {todo, description, _id: todos.length}]);
+      setTodos(todos => [...todos, {todo, description, id: todos.length, isReady: false}]);
+      console.log([...todos, { todo, description, id: todos.length, isReady: false }]);
     });
   };
 
   const removeHandler = (id) => {
     return () => {
       contract.removeTodo(id).then(() => {
-        setTodos(todos => todos.filter((todo, key) => key !== id));
+        setTodos(todos => todos.filter(todo => todo.id !== id));
       });
     }
+  }
+
+  const markAsReady = (id) => {
+    return () => {
+      contract.markAsReady(id.toNumber()).then(() => {
+        const todo = todos.find(todo => todo.id === id);
+        setTodos(todos => {
+          return [...todos.filter(todo => todo.id !== id), {...todo, isReady: true}];
+        });
+      });
+    };
   }
 
   return (
@@ -61,19 +72,51 @@ function HomePage() {
       <table style={{width: '100%', textAlign: 'center'}}>
         <thead>
           <tr>
+            {/* <th>id</th> */}
             <th>Todo</th>
             <th>Description</th>
+            <th>Status</th>
+            <th>Mark as ready</th>
+          </tr>
+        </thead>
+        <tbody>
+          {todos.filter(todo => !todo.isReady).map((todo, key) => {
+            return (
+              <tr key={key}>
+                {/* <td>{parseInt(todo.id)}</td> */}
+                <td>{todo.todo}</td>
+                <td>{todo.description}</td>
+                <td>todo</td>
+                <td>
+                  <button onClick={markAsReady(todo.id)}>Ready</button>
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+
+      <h2>Ready Todos</h2>
+      <table style={{ width: '100%', textAlign: 'center' }}>
+        <thead>
+          <tr>
+            {/* <th>id</th> */}
+            <th>Todo</th>
+            <th>Description</th>
+            <th>Status</th>
             <th>Remove</th>
           </tr>
         </thead>
         <tbody>
-          {todos.map((todo, key) => {
+          {todos.filter(todo => todo.isReady).map((todo, key) => {
             return (
               <tr key={key}>
+                {/* <td>{parseInt(todo.id)}</td> */}
                 <td>{todo.todo}</td>
                 <td>{todo.description}</td>
+                <td>ready</td>
                 <td>
-                  <button onClick={removeHandler(key)}>X</button>
+                  <button onClick={removeHandler(todo.id)}>X</button>
                 </td>
               </tr>
             )
