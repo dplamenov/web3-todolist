@@ -13,6 +13,11 @@
         "name": "addTodo",
         "outputs": [{
             "components": [{
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                },
+                {
                     "internalType": "string",
                     "name": "todo",
                     "type": "string"
@@ -60,6 +65,11 @@
         "name": "editTodo",
         "outputs": [{
             "components": [{
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                },
+                {
                     "internalType": "string",
                     "name": "todo",
                     "type": "string"
@@ -87,6 +97,11 @@
         "name": "getTodos",
         "outputs": [{
             "components": [{
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                },
+                {
                     "internalType": "string",
                     "name": "todo",
                     "type": "string"
@@ -118,6 +133,11 @@
         "name": "markAsReady",
         "outputs": [{
             "components": [{
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                },
+                {
                     "internalType": "string",
                     "name": "todo",
                     "type": "string"
@@ -134,7 +154,7 @@
                 }
             ],
             "internalType": "struct TodoList.Todo",
-            "name": "",
+            "name": "todo",
             "type": "tuple"
         }],
         "stateMutability": "nonpayable",
@@ -149,6 +169,11 @@
         "name": "removeTodo",
         "outputs": [{
             "components": [{
+                    "internalType": "uint256",
+                    "name": "id",
+                    "type": "uint256"
+                },
+                {
                     "internalType": "string",
                     "name": "todo",
                     "type": "string"
